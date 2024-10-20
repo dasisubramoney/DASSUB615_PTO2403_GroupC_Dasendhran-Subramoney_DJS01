@@ -9,23 +9,40 @@
 const vel = 10000; // velocity (km/h)
 const acc = 3; // acceleration (m/s^2)
 const time = 3600; // seconds (1 hour)
-const d = 0; // distance (km)
+const Distance1 = 0; // distance (km)
 const fuel = 5000; // remaining fuel (kg)
-const fbr = 0.5; // fuel burn rate (kg/s)
+const fuelburnrate = 0.5; // fuel burn rate (kg/s)
 
 
-const d2 = d + (vel*time) //calcultes new distance
-const rf = fbr*time //calculates remaining fuel
-const vel2 = calcNewVel(acc, vel, time) //calculates new velocity based on acceleration
+const NewDistance = Distance1 + ((vel/3600)*time) //calcultes new distance
+const Remainingfuel = fuel - (fuelburnrate*time) //calculates remaining fuel
+const NewVel = calcNewVel(vel, acc, time) //calculates new velocity based on acceleration
 
 // Pick up an error with how the function below is called and make it robust to such errors
-calcNewVel = (vel, acc, time) => { 
-  return vel + (acc*time)
+function calcNewVel (vel, acc, time) { 
+  // Checks if all inputs are numbers
+  if (typeof vel !== 'number') {
+    throw new Error('Invalid velocity: must be a number.');
+  }
+  if (typeof acc !== 'number') {
+    throw new Error('Invalid acceleration: must be a number.');
+  }
+  if (typeof time !== 'number') {
+    throw new Error('Invalid time: must be a number.');
+  }
+
+  // Checks if time variable is correct
+  if (time < 0) {
+    throw new Error('Invalid time: time must be a postive number.');
+  }
+
+  // Return the calculated new velocity
+  return vel + (acc*12960) ;
 }
 
-console.log(`Corrected New Velocity: ${vel2} km/h`);
-console.log(`Corrected New Distance: ${d2} km`);
-console.log(`Corrected Remaining Fuel: ${rf} kg`);
+console.log(`Corrected New Velocity: ${NewVel} km/h`);
+console.log(`Corrected New Distance: ${NewDistance} km`);
+console.log(`Corrected Remaining Fuel: ${fuelburnrate} kg`);
 
 
 
